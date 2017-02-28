@@ -30,23 +30,19 @@ public class NewsDbHelper extends SQLiteOpenHelper {
 
                 "CREATE TABLE " + NewsContract.NewsEntry.TABLE_NAME + " (" +
 
-                        NewsContract.NewsEntry._ID               + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        NewsContract.NewsEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 
-                        NewsContract.NewsEntry.COLUMN_TITLE       + " TEXT NOT NULL, "                 +
-                        NewsContract.NewsEntry.COLUMN_IMAGEID + " TEXT NOT NULL,"                +
-                        NewsContract.NewsEntry.COLUMN_PLOT +" TEXT NOT NULL,"         +
-                        NewsContract.NewsEntry.COLUMN_AUTHOR+" TEXT NOT NULL,"        +
-                        NewsContract.NewsEntry.COLUMN_URL+" TEXT NOT NULL);";
-
-
-
+                        NewsContract.NewsEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
+                        NewsContract.NewsEntry.COLUMN_IMAGEID + " TEXT NOT NULL," +
+                        NewsContract.NewsEntry.COLUMN_PLOT + " TEXT NOT NULL," +
+                        NewsContract.NewsEntry.COLUMN_AUTHOR + " TEXT NOT NULL," +
+                        NewsContract.NewsEntry.COLUMN_URL + " TEXT NOT NULL);";
 
 
         sqLiteDatabase.execSQL(SQL_CREATE_NEWS_TABLE);
     }
 
     /**
-
      * @param sqLiteDatabase Database that is being upgraded
      * @param oldVersion     The old database version
      * @param newVersion     The new database version

@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.support.annotation.Nullable;
 
 
-
 /**
  * Created by gowth on 2/27/2017.
  */
@@ -20,6 +19,7 @@ public class NewsProvider extends ContentProvider {
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private NewsDbHelper mOpenHelper;
+
     public static UriMatcher buildUriMatcher() {
 
         /*
@@ -81,8 +81,8 @@ public class NewsProvider extends ContentProvider {
             case NEWS_ID:
                 // Insert new values into the database
                 // Inserting values into tasks table
-                long id = db.insertWithOnConflict(NewsContract.NewsEntry.TABLE_NAME,null,contentValues,SQLiteDatabase.CONFLICT_IGNORE);
-                if ( id > 0 ) {
+                long id = db.insertWithOnConflict(NewsContract.NewsEntry.TABLE_NAME, null, contentValues, SQLiteDatabase.CONFLICT_IGNORE);
+                if (id > 0) {
                     returnUri = ContentUris.withAppendedId(NewsContract.NewsEntry.CONTENT_URI, id);
                 } else {
                     throw new android.database.SQLException("Failed to insert row into " + uri);
@@ -99,14 +99,12 @@ public class NewsProvider extends ContentProvider {
         return returnUri;
 
 
-
-
     }
 
     @Override
     public int delete(Uri uri, String s, String[] strings) {
 
-        final SQLiteDatabase db=mOpenHelper.getWritableDatabase();
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         int rowsDeleted;
         // this makes delete all rows return the number of rows deleted
         if (null == s)

@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
  */
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterViewHolder> {
-    private String[] NewsDetails;
+    private String[] newsDetails;
     private Context context;
 
     private final NewsAdapter.NewsAdapterOnClickHandler mClickHandler;
@@ -25,19 +25,19 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
         void onClick(String newsdetail);
     }
 
-    public NewsAdapter(Context context, NewsAdapter.NewsAdapterOnClickHandler clicklistener){
-        mClickHandler=clicklistener;
-        this.context=context;
+    public NewsAdapter(Context context, NewsAdapter.NewsAdapterOnClickHandler clicklistener) {
+        mClickHandler = clicklistener;
+        this.context = context;
     }
+
     @Override
     public NewsAdapter.NewsAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        Context context=parent.getContext();
-        int layoutid=R.layout.card_item1;
-        LayoutInflater inflater=LayoutInflater.from(context);
-        boolean shouldattachtoparent=false;
-        View view=inflater.inflate(layoutid,parent,shouldattachtoparent);
-
+        Context context = parent.getContext();
+        int layoutid = R.layout.card_item1;
+        LayoutInflater inflater = LayoutInflater.from(context);
+        boolean shouldattachtoparent = false;
+        View view = inflater.inflate(layoutid, parent, shouldattachtoparent);
 
 
         return new NewsAdapter.NewsAdapterViewHolder(view);
@@ -46,10 +46,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
     @Override
     public void onBindViewHolder(NewsAdapter.NewsAdapterViewHolder holder, int position) {
 
-        final String newsdetails=NewsDetails[position];
-        String[] Splitdata=newsdetails.split(">");
-        String imageurl=Splitdata[0];
-        String text1=Splitdata[1];
+        final String newsdetails = newsDetails[position];
+        String[] Splitdata = newsdetails.split(">");
+        String imageurl = Splitdata[0];
+        String text1 = Splitdata[1];
         holder.mTextview.setText(text1);
         holder.mview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,13 +69,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
 
     @Override
     public int getItemCount() {
-        if(null==NewsDetails)
+        if (null == newsDetails)
             return 0;
 
-        return NewsDetails.length;
+        return newsDetails.length;
     }
 
-    public class NewsAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class NewsAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public final ImageView mImageview;
         public final View mview;
@@ -83,8 +83,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
 
         public NewsAdapterViewHolder(View itemView) {
             super(itemView);
-            mview=itemView;
-            mImageview= (ImageView) itemView.findViewById(R.id.newsimage);
+            mview = itemView;
+            mImageview = (ImageView) itemView.findViewById(R.id.newsimage);
             mTextview = (TextView) itemView.findViewById(R.id.tv_text);
 
             itemView.setOnClickListener(this);
@@ -94,14 +94,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
 
-            String news = NewsDetails[adapterPosition];
+            String news = newsDetails[adapterPosition];
             mClickHandler.onClick(news);
 
         }
     }
 
     public void setNewsData(String[] newsData) {
-        NewsDetails = newsData;
+        newsDetails = newsData;
         notifyDataSetChanged();
     }
 

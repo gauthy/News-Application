@@ -7,4 +7,9 @@
     <string name="action_share">Share</string>
     <string name="bookmark">Bookmark Icon</string>
     <string name="sharebuton">Share Icon</string>
+    <string name="favouritenews">Your news</string>
+    <string name="erroroccured">Error occured</string>
+    <string name="readmore">Readmore at:</string>
+    <string name="written">Written by:</string>
+    <string name="unknown">Writtten by:Unknown</string>
 </resources>

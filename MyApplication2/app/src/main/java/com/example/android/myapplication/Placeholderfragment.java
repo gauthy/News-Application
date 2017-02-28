@@ -28,21 +28,21 @@ import java.net.URL;
  * Created by gowth on 2/24/2017.
  */
 
-public class Placeholderfragment {
-    public static class PlaceholderFragment extends Fragment implements NewsAdapter.NewsAdapterOnClickHandler {
+public class PlaceholderFragment {
+    public static class PlaceholderFragments extends Fragment implements NewsAdapter.NewsAdapterOnClickHandler {
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
         private static final String ARG_SECTION_TYPE = "section_type";
-
+        private static int position;
         private RecyclerView mRecyclerView;
         private NewsAdapter mNewsAdapter;
         private ProgressBar mLoadingIndicator;
         private TextView mErrorMessageDisplay;
-
-        public static final String[] NEWS_DETAIL={
+        private TextView mErrorText;
+        public static final String[] NEWS_DETAIL = {
                 NewsContract.NewsEntry.COLUMN_IMAGEID,
                 NewsContract.NewsEntry.COLUMN_TITLE,
                 NewsContract.NewsEntry.COLUMN_PLOT,
@@ -51,18 +51,18 @@ public class Placeholderfragment {
 
         };
 
-        public PlaceholderFragment() {
+        public PlaceholderFragments() {
         }
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber,String typee) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
+        public static PlaceholderFragments newInstance(int sectionNumber, String typee) {
+            PlaceholderFragments fragment = new PlaceholderFragments();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            args.putString(ARG_SECTION_TYPE,typee);
+            args.putString(ARG_SECTION_TYPE, typee);
             fragment.setArguments(args);
             return fragment;
         }
@@ -71,57 +71,56 @@ public class Placeholderfragment {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            mErrorMessageDisplay = (TextView) rootView.findViewById(R.id.tv_error_message_display);
-            mRecyclerView= (RecyclerView) rootView.findViewById(R.id.recyclerviewnews);
-            String strtext =  getArguments().getString("keyy");
-           // Toast.makeText(getContext(), strtext,Toast.LENGTH_LONG).show();
-            if(strtext==null)
-            {
-                strtext=getArguments().getString(ARG_SECTION_TYPE);
+            mErrorMessageDisplay = (TextView) rootView.findViewById(R.id.section_label);
+            mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerviewnews);
+            String strtext = getArguments().getString("keyy");
+            // Toast.makeText(getContext(), strtext,Toast.LENGTH_LONG).show();
+            if (strtext == null) {
+                strtext = getArguments().getString(ARG_SECTION_TYPE);
             }
-            Context context=rootView.getContext();
-            mNewsAdapter=new NewsAdapter(context,this);
-        AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
-      //       Create an ad request. Check logcat output for the hashed device ID to
-       //      get test ads on a physical device. e.g.
-        //     "Use AdRequest.Builder.addTestDevice("ABCDEF012345") to get test ads on this device."
-           AdRequest adRequest = new AdRequest.Builder()
+            Context context = rootView.getContext();
+            mNewsAdapter = new NewsAdapter(context, this);
+            AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
+            //       Create an ad request. Check logcat output for the hashed device ID to
+            //      get test ads on a physical device. e.g.
+            //     "Use AdRequest.Builder.addTestDevice("ABCDEF012345") to get test ads on this device."
+            AdRequest adRequest = new AdRequest.Builder()
                     .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                     .build();
             mAdView.loadAd(adRequest);
 
             //  GridLayoutManager layoutManager=new GridLayoutManager(getContext(),2);
-            LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity());
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
             mRecyclerView.setLayoutManager(layoutManager);
-
 
 
             mRecyclerView.setAdapter(mNewsAdapter);
 
-            mErrorMessageDisplay= (TextView)rootView. findViewById(R.id.tv_error_message_display);
+            mErrorMessageDisplay = (TextView) rootView.findViewById(R.id.tv_error_message_display);
 
-            mLoadingIndicator= (ProgressBar) rootView.findViewById(R.id.pb_loading_indicator);
+            mLoadingIndicator = (ProgressBar) rootView.findViewById(R.id.pb_loading_indicator);
+
+            position = getArguments().getInt(ARG_SECTION_NUMBER);
+            loadNews(strtext);
 
 
-            loadnews(strtext);
-
-
-         //   textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            //  mErrorText.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
 
-        private void loadnews(String txt) {
+        private void loadNews(String txt) {
             switch (txt) {
                 case "bookmark":
                     new GetFavouriteNewsDetails(getContext()).execute();
                     break;
-                    default:
-                        new GetNewsDetails().execute(txt);
+                default:
+                    new GetNewsDetails().execute(txt);
             }
         }
 
-        public  class GetNewsDetails extends AsyncTask<String,Void,String[]> {
+        public class GetNewsDetails extends AsyncTask<String, Void, String[]> {
             String order;
+
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -130,7 +129,7 @@ public class Placeholderfragment {
 
             @Override
             protected String[] doInBackground(String... strings) {
-                 order = strings[0];
+                order = strings[0];
                 URL newssurl = NetWorkUtils.getnewsUrl(order);
                 try {
                     String Jsonresponse = NetWorkUtils.getResponseFromHttpUrl(newssurl);
@@ -158,15 +157,15 @@ public class Placeholderfragment {
 
             }
         }
-        public class GetFavouriteNewsDetails extends AsyncTask<Void,Void,String[]>
-        {
+
+        public class GetFavouriteNewsDetails extends AsyncTask<Void, Void, String[]> {
             private Context mContext;
 
-            public GetFavouriteNewsDetails(Context context)
-            {
-                mContext=context;
+            public GetFavouriteNewsDetails(Context context) {
+                mContext = context;
 
             }
+
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -175,26 +174,27 @@ public class Placeholderfragment {
 
             private String[] getFavoriteNewsDataFromCursor(Cursor cursor) {
                 String[] results = new String[cursor.getCount()];
-                int i=0;
+                int i = 0;
                 if (cursor != null && cursor.moveToFirst()) {
                     do {
-                        results[i]=cursor.getString(cursor.getColumnIndex("image_id"))+">"
-                                +cursor.getString(cursor.getColumnIndex("title"))+">"
-                                +cursor.getString(cursor.getColumnIndex("description"))+">"
-                                +cursor.getString(cursor.getColumnIndex("url"))+">"
-                                +cursor.getString(cursor.getColumnIndex("author"));
+                        results[i] = cursor.getString(cursor.getColumnIndex("image_id")) + ">"
+                                + cursor.getString(cursor.getColumnIndex("title")) + ">"
+                                + cursor.getString(cursor.getColumnIndex("description")) + ">"
+                                + cursor.getString(cursor.getColumnIndex("url")) + ">"
+                                + cursor.getString(cursor.getColumnIndex("author"));
                         i++;
                     } while (cursor.moveToNext());
                     cursor.close();
                 }
-                return results;        }
+                return results;
+            }
 
             @Override
             protected String[] doInBackground(Void... voids) {
 
 
-                Cursor cursor=mContext.getContentResolver().query(NewsContract.NewsEntry.CONTENT_URI,
-                        NEWS_DETAIL  ,
+                Cursor cursor = mContext.getContentResolver().query(NewsContract.NewsEntry.CONTENT_URI,
+                        NEWS_DETAIL,
                         null,
                         null,
                         null);
@@ -212,12 +212,15 @@ public class Placeholderfragment {
                     showNewsData();
                     mNewsAdapter.setNewsData(news);
                 } else {
+
                     mErrorMessageDisplay.setText(MainActivity.text);
-                    showErrorMessage();
+                    //    showErrorMessage();
+                    //   mErrorMessageDisplay.setText(MainActivity.text);
 
                 }
             }
         }
+
         private void showErrorMessage() {
 
             mRecyclerView.setVisibility(View.INVISIBLE);

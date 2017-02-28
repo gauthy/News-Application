@@ -14,38 +14,36 @@ import java.util.Scanner;
 public class NetWorkUtils {
 
 
-
     public static URL getnewsUrl(String order) {
 
         URL url = null;
         try {
-switch (order) {
-    case "sport":
-    url = new URL("https://newsapi.org/v1/sources?category=sport");
-        break;
-    case "technology":
-    url=new URL("https://newsapi.org/v1/sources?category=technology");
-        break;
-    case "general":
-        url=new URL("https://newsapi.org/v1/sources?category=general");
-        break;
-    case "business":
-        url=new URL("https://newsapi.org/v1/sources?category=business");
-        break;
-    case "entertainment":
-        url=new URL("https://newsapi.org/v1/sources?category=entertainment");
-        break;
-}
+            switch (order) {
+                case "sport":
+                    url = new URL("https://newsapi.org/v1/sources?category=sport");
+                    break;
+                case "technology":
+                    url = new URL("https://newsapi.org/v1/sources?category=technology");
+                    break;
+                case "general":
+                    url = new URL("https://newsapi.org/v1/sources?category=general");
+                    break;
+                case "business":
+                    url = new URL("https://newsapi.org/v1/sources?category=business");
+                    break;
+                case "entertainment":
+                    url = new URL("https://newsapi.org/v1/sources?category=entertainment");
+                    break;
+            }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
 
-     //   Log.v(TAG, "Built URI " + url);
+        //   Log.v(TAG, "Built URI " + url);
 
         return url;
 
     }
-
 
 
     public static String getResponseFromHttpUrl(URL url) throws IOException {

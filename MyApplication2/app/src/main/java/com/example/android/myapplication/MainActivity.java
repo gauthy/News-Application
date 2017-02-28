@@ -1,23 +1,13 @@
 package com.example.android.myapplication;
 
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
@@ -26,23 +16,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-
-import android.view.ViewGroup;
 
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.example.android.myapplication.Utils.NetWorkUtils;
 import com.example.android.myapplication.Utils.NewsContract;
-import com.example.android.myapplication.Utils.NewsJson;
-
-import java.net.URL;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -58,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
-    public static final String[] NEWS_DETAIL= {
+    public static final String[] NEWS_DETAIL = {
             NewsContract.NewsEntry.COLUMN_IMAGEID,
     };
     private DrawerLayout mDrawerLayout;
@@ -72,7 +52,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public TextView mErrorMessageDisplay;
     public static final int INDEX_ID = 0;
     public ProgressBar mLoadingIndicator;
-    String typee="technology";
+    String typee = "technology";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,16 +61,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-      //  final ActionBar ab = getSupportActionBar();
-       // ab.setHomeAsUpIndicator(R.drawable.ic_menu);
-       // ab.setDisplayHomeAsUpEnabled(true);
-
-
+        //  final ActionBar ab = getSupportActionBar();
+        // ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        // ab.setDisplayHomeAsUpEnabled(true);
+        ((MyApplication) getApplication()).startTracking();
 
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),typee);
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), typee);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -98,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-        mErrorMessageDisplay= (TextView) findViewById(R.id.tv_error_message_display);
+        mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
         getSupportLoaderManager().initLoader(101, null, this);
 
     }
@@ -106,28 +86,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     protected void onResume() {
         super.onResume();
-       int n= mViewPager.getCurrentItem();
-        if(n==5)
-        mViewPager.getAdapter().notifyDataSetChanged();
+        int n = mViewPager.getCurrentItem();
+        if (n == 5) {
+            mViewPager.getAdapter().notifyDataSetChanged();
+        }
     }
-
-
 
 
     @Override
     public Loader onCreateLoader(int id, Bundle args) {
 
 
-        Uri newsuri=NewsContract.NewsEntry.CONTENT_URI;
+        Uri newsuri = NewsContract.NewsEntry.CONTENT_URI;
 
-        return new CursorLoader(this,newsuri,NEWS_DETAIL,null,null,null);
+        return new CursorLoader(this, newsuri, NEWS_DETAIL, null, null, null);
     }
 
     @Override
     public void onLoadFinished(Loader loader, Cursor data) {
 
-        if(data.getCount()==0)
-    text="No favourite items present";
+        int n = data.getCount();
+        Toast.makeText(getApplicationContext(), "You have " + n + " Favourite Articles", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -145,12 +124,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
 
-         String typeee;
+        String typeee;
 
         public SectionsPagerAdapter(FragmentManager fm, String fp) {
 
             super(fm);
-            this.typeee=fp;
+            this.typeee = fp;
         }
 
         @Override
@@ -160,31 +139,30 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                return Placeholderfragment.PlaceholderFragment.newInstance(position + 1, "general");
+                    return PlaceholderFragment.PlaceholderFragments.newInstance(position + 1, "general");
 
                 case 1:
-                    return Placeholderfragment.PlaceholderFragment.newInstance(position + 1, "sport");
+                    return PlaceholderFragment.PlaceholderFragments.newInstance(position + 1, "sport");
 
                 case 2:
-                    return Placeholderfragment.PlaceholderFragment.newInstance(position + 1, "technology");
+                    return PlaceholderFragment.PlaceholderFragments.newInstance(position + 1, "technology");
                 case 3:
-                  //  mViewPager.getAdapter().notifyDataSetChanged();
-                    return Placeholderfragment.PlaceholderFragment.newInstance(position + 1, "business");
+                    //  mViewPager.getAdapter().notifyDataSetChanged();
+                    return PlaceholderFragment.PlaceholderFragments.newInstance(position + 1, "business");
 
                 case 4:
                     //  mViewPager.getAdapter().notifyDataSetChanged();
-                    return Placeholderfragment.PlaceholderFragment.newInstance(position + 1, "entertainment");
+                    return PlaceholderFragment.PlaceholderFragments.newInstance(position + 1, "entertainment");
 
                 case 5:
                     //  mViewPager.getAdapter().notifyDataSetChanged();
-                    return Placeholderfragment.PlaceholderFragment.newInstance(position + 1, "bookmark");
+                    return PlaceholderFragment.PlaceholderFragments.newInstance(position + 1, "bookmark");
 
 
             }
-           // return null;
-            return Placeholderfragment.PlaceholderFragment.newInstance(position + 1, "technology");
+            // return null;
+            return PlaceholderFragment.PlaceholderFragments.newInstance(position + 1, "technology");
         }
-
 
 
         @Override
@@ -221,7 +199,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
 
     }
-
 
 
 }

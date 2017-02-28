@@ -18,7 +18,7 @@ public class CheckFavourite {
                 NewsContract.NewsEntry.CONTENT_URI,
                 null,
                 NewsContract.NewsEntry.COLUMN_TITLE + " = ?",
-                new String[] { id },
+                new String[]{id},
                 null
         );
         int numRows = cursor.getCount();

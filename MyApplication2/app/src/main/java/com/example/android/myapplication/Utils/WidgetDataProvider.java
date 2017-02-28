@@ -29,14 +29,14 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
         this.intent = intent;
     }
 
-    private void initCursor(){
+    private void initCursor() {
         if (cursor != null) {
             cursor.close();
         }
         final long identityToken = Binder.clearCallingIdentity();
 
-        Uri builduri=NewsContract.NewsEntry.CONTENT_URI;
-        cursor=context.getContentResolver().query(builduri,WIDGET_COLUMNS,null,null,null);
+        Uri builduri = NewsContract.NewsEntry.CONTENT_URI;
+        cursor = context.getContentResolver().query(builduri, WIDGET_COLUMNS, null, null, null);
         Binder.restoreCallingIdentity(identityToken);
     }
 
@@ -55,7 +55,7 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
 
     @Override
     public void onDestroy() {
-    cursor.close();
+        cursor.close();
     }
 
     @Override
@@ -67,8 +67,8 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
     public RemoteViews getViewAt(int i) {
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.list_item);
         cursor.moveToPosition(i);
-        remoteViews.setTextViewText(R.id.title1,cursor.getString(INDEX_TITLE));
-        remoteViews.setTextViewText(R.id.author1,cursor.getString(INDEX_AUTHOR));
+        remoteViews.setTextViewText(R.id.title1, cursor.getString(INDEX_TITLE));
+        remoteViews.setTextViewText(R.id.author1, cursor.getString(INDEX_AUTHOR));
 
 
         return remoteViews;

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <string name="ga_trackingId">UA-66499173-2</string>
+    <string name="ga_autoActivityTracking">true</string>
+
+
+    <resources>
+        <string name="ga_trackingId">UA-66499173-2</string>
+        <bool name="ga_autoActivityTracking">true</bool>
+        <ScreenName name="com.example.android.myapplication.MainActivity">Main screen</ScreenName>
+        <ScreenName name="com.example.android.myapplication.DetailView">Detail screen</ScreenName>
+        <ScreenName name="com.example.android.myapplication.NewsAdapter">News screen</ScreenName>
+        <ScreenName name="com.example.android.myapplication.CheckFavourite">Favourite Action
+        </ScreenName>
+    </resources>
+
+</resources>
