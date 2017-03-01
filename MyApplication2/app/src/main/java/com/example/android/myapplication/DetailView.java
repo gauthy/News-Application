@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 
 import com.example.android.myapplication.Utils.NewsContract;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -126,5 +128,11 @@ public class DetailView extends AppCompatActivity {
         collapsingToolbar.setTitle(title);
     }
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Tracker tracker=((MyApplication) getApplication()).getTracker();
+        tracker.setScreenName("Detail Screen Entered");
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
 }

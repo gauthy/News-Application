@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 
 import com.example.android.myapplication.Utils.NewsContract;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -84,6 +86,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        Tracker tracker=((MyApplication) getApplication()).getTracker();
+        tracker.setScreenName("Main Screen Entered");
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         int n = mViewPager.getCurrentItem();
@@ -106,7 +116,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoadFinished(Loader loader, Cursor data) {
 
         int n = data.getCount();
-        Toast.makeText(getApplicationContext(), "You have " + n + " Favourite Articles", Toast.LENGTH_SHORT).show();
+        String text=getString(R.string.favouritetext);
+        Toast.makeText(getApplicationContext(), text + n , Toast.LENGTH_SHORT).show();
     }
 
     @Override

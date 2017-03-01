@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "855924789951",
+    "project_id": "firebase-news-application"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855924789951:android:875826f41b75eba4",
+        "android_client_info": {
+          "package_name": "com.example.android.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB528H1rD7EtPTJwyPTjDSD9nvsfybEV6o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-66499173-2"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

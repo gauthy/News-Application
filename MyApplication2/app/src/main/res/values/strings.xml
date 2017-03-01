@@ -12,4 +12,5 @@
     <string name="readmore">Readmore at:</string>
     <string name="written">Written by:</string>
     <string name="unknown">Writtten by:Unknown</string>
+    <string name="favouritetext">Favourites you have is </string>
 </resources>
